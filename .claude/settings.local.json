@@ -12,7 +12,10 @@
       "Bash(npx tsc:*)",
       "Bash(bash:*)",
       "Bash(ls:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(npm install:*)",
+      "Bash(pnpm prisma:*)",
+      "Bash(xargs grep:*)"
     ]
   }
 }
