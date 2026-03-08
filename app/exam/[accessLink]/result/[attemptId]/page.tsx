@@ -146,21 +146,21 @@ export default async function ExamResultPage({
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
+    <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
+      <header className="border-b border-border bg-card shadow-sm">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors mb-3"
+            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-3"
           >
             <ArrowLeft className="h-4 w-4" />
             Back to home
           </Link>
-          <h1 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
+          <h1 className="text-xl sm:text-2xl font-bold text-foreground">
             {attempt.exam.title}
           </h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+          <p className="text-sm text-muted-foreground mt-1">
             Results for {attempt.candidate.fullName}
           </p>
         </div>
@@ -193,7 +193,7 @@ export default async function ExamResultPage({
                     >
                       {totalScore}
                     </div>
-                    <div className="text-sm text-slate-500 dark:text-slate-400">
+                    <div className="text-sm text-muted-foreground">
                       / {totalMarks}
                     </div>
                   </div>
@@ -224,13 +224,13 @@ export default async function ExamResultPage({
                   </Badge>
                 </div>
 
-                <p className="text-sm text-slate-500 dark:text-slate-400">
+                <p className="text-sm text-muted-foreground">
                   Passing score: {passingPercentage}%
                 </p>
 
                 <Badge
                   variant="outline"
-                  className="text-slate-600 dark:text-slate-300"
+                  className="text-muted-foreground"
                 >
                   <Clock className="h-3 w-3" />
                   {attempt.status === "timed_out"
@@ -249,10 +249,10 @@ export default async function ExamResultPage({
           <Card>
             <CardContent className="pt-4 pb-4 flex flex-col items-center gap-1">
               <Target className="h-5 w-5 text-blue-500" />
-              <span className="text-2xl font-bold text-slate-900 dark:text-white">
+              <span className="text-2xl font-bold text-foreground">
                 {totalScore}
               </span>
-              <span className="text-xs text-slate-500 dark:text-slate-400">
+              <span className="text-xs text-muted-foreground">
                 Total Score
               </span>
             </CardContent>
@@ -264,7 +264,7 @@ export default async function ExamResultPage({
               <span className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">
                 {totalCorrect}
               </span>
-              <span className="text-xs text-slate-500 dark:text-slate-400">
+              <span className="text-xs text-muted-foreground">
                 Correct
               </span>
             </CardContent>
@@ -276,7 +276,7 @@ export default async function ExamResultPage({
               <span className="text-2xl font-bold text-red-600 dark:text-red-400">
                 {totalWrong}
               </span>
-              <span className="text-xs text-slate-500 dark:text-slate-400">
+              <span className="text-xs text-muted-foreground">
                 Wrong
               </span>
             </CardContent>
@@ -284,11 +284,11 @@ export default async function ExamResultPage({
 
           <Card>
             <CardContent className="pt-4 pb-4 flex flex-col items-center gap-1">
-              <MinusCircle className="h-5 w-5 text-slate-400" />
-              <span className="text-2xl font-bold text-slate-500 dark:text-slate-400">
+              <MinusCircle className="h-5 w-5 text-muted-foreground" />
+              <span className="text-2xl font-bold text-muted-foreground">
                 {totalUnanswered}
               </span>
-              <span className="text-xs text-slate-500 dark:text-slate-400">
+              <span className="text-xs text-muted-foreground">
                 Unanswered
               </span>
             </CardContent>
@@ -300,7 +300,7 @@ export default async function ExamResultPage({
           <Card>
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
-                <TrendingUp className="h-5 w-5 text-slate-500" />
+                <TrendingUp className="h-5 w-5 text-muted-foreground" />
                 Section-wise Breakdown
               </CardTitle>
             </CardHeader>
@@ -323,7 +323,7 @@ export default async function ExamResultPage({
                         <span className="text-emerald-600 dark:text-emerald-400 font-medium">
                           {section.correct}
                         </span>
-                        <span className="text-slate-400"> / </span>
+                        <span className="text-muted-foreground"> / </span>
                         <span>{section.total}</span>
                       </TableCell>
                       <TableCell className="text-right font-medium">
@@ -341,7 +341,7 @@ export default async function ExamResultPage({
         <Card>
           <CardHeader>
             <CardTitle className="text-lg flex items-center gap-2">
-              <Hash className="h-5 w-5 text-slate-500" />
+              <Hash className="h-5 w-5 text-muted-foreground" />
               Question-by-Question Review
             </CardTitle>
             <CardDescription>
@@ -361,7 +361,7 @@ export default async function ExamResultPage({
                     {/* Status Icon */}
                     <div className="pt-0.5 shrink-0">
                       {isUnanswered ? (
-                        <MinusCircle className="h-5 w-5 text-slate-400" />
+                        <MinusCircle className="h-5 w-5 text-muted-foreground" />
                       ) : isCorrect ? (
                         <CheckCircle2 className="h-5 w-5 text-emerald-500" />
                       ) : (
@@ -373,10 +373,10 @@ export default async function ExamResultPage({
                     <div className="flex-1 min-w-0 space-y-2">
                       {/* Question header */}
                       <div className="flex flex-wrap items-start gap-2">
-                        <span className="text-sm font-medium text-slate-500 dark:text-slate-400 shrink-0">
+                        <span className="text-sm font-medium text-muted-foreground shrink-0">
                           Q{index + 1}.
                         </span>
-                        <p className="text-sm font-medium text-slate-900 dark:text-white flex-1">
+                        <p className="text-sm font-medium text-foreground flex-1">
                           {response.question.questionText}
                         </p>
                         <Badge variant="outline" className="text-xs shrink-0">
@@ -389,13 +389,13 @@ export default async function ExamResultPage({
                       <div className="grid gap-1.5 text-sm pl-0 sm:pl-6">
                         {/* Selected Answer */}
                         <div className="flex items-start gap-2">
-                          <span className="text-slate-500 dark:text-slate-400 shrink-0 w-24 text-xs font-medium uppercase tracking-wider pt-0.5">
+                          <span className="text-muted-foreground shrink-0 w-24 text-xs font-medium uppercase tracking-wider pt-0.5">
                             Your answer
                           </span>
                           <span
                             className={
                               isUnanswered
-                                ? "text-slate-400 italic"
+                                ? "text-muted-foreground italic"
                                 : isCorrect
                                   ? "text-emerald-600 dark:text-emerald-400 font-medium"
                                   : "text-red-600 dark:text-red-400 font-medium"
@@ -408,7 +408,7 @@ export default async function ExamResultPage({
                         {/* Correct Answer (show if wrong or unanswered) */}
                         {(!isCorrect || isUnanswered) && (
                           <div className="flex items-start gap-2">
-                            <span className="text-slate-500 dark:text-slate-400 shrink-0 w-24 text-xs font-medium uppercase tracking-wider pt-0.5">
+                            <span className="text-muted-foreground shrink-0 w-24 text-xs font-medium uppercase tracking-wider pt-0.5">
                               Correct
                             </span>
                             <span className="text-emerald-600 dark:text-emerald-400 font-medium">
@@ -424,7 +424,7 @@ export default async function ExamResultPage({
                         {response.question.explanation && (
                           <div className="flex items-start gap-2 mt-1">
                             <HelpCircle className="h-3.5 w-3.5 text-blue-500 shrink-0 mt-0.5" />
-                            <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                            <p className="text-xs text-muted-foreground leading-relaxed">
                               {response.question.explanation}
                             </p>
                           </div>
@@ -437,7 +437,7 @@ export default async function ExamResultPage({
             })}
 
             {attempt.responses.length === 0 && (
-              <div className="text-center py-8 text-slate-500 dark:text-slate-400">
+              <div className="text-center py-8 text-muted-foreground">
                 <MinusCircle className="h-8 w-8 mx-auto mb-2 opacity-50" />
                 <p>No responses recorded for this attempt.</p>
               </div>
@@ -447,7 +447,7 @@ export default async function ExamResultPage({
 
         {/* Footer */}
         <div className="text-center pb-6">
-          <p className="text-xs text-slate-400 dark:text-slate-500">
+          <p className="text-xs text-muted-foreground">
             Attempt ID: {attemptId.slice(0, 8)}...{" "}
             {attempt.submittedAt &&
               `| Submitted: ${new Date(attempt.submittedAt).toLocaleString()}`}

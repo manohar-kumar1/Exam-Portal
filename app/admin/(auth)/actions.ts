@@ -11,17 +11,29 @@ export async function signInAdmin(formData: {
 }) {
   const parsed = adminSignInSchema.safeParse(formData);
   if (!parsed.success) {
-    return { error: parsed.error.errors[0].message };
+    return { error: parsed.error.issues[0].message };
   }
 
   const supabase = await createSupabaseServerClient();
-  const { error } = await supabase.auth.signInWithPassword({
+  const { data: signInData, error } = await supabase.auth.signInWithPassword({
     email: parsed.data.email,
     password: parsed.data.password,
   });
 
   if (error) {
     return { error: "Invalid email or password" };
+  }
+
+  if (signInData.user) {
+    await prisma.admin.upsert({
+      where: { supabaseId: signInData.user.id },
+      create: {
+        supabaseId: signInData.user.id,
+        name: signInData.user.user_metadata?.name ?? parsed.data.email,
+        email: parsed.data.email,
+      },
+      update: {},
+    });
   }
 
   redirect("/admin/dashboard");
@@ -34,7 +46,7 @@ export async function signUpAdmin(formData: {
 }) {
   const parsed = adminSignUpSchema.safeParse(formData);
   if (!parsed.success) {
-    return { error: parsed.error.errors[0].message };
+    return { error: parsed.error.issues[0].message };
   }
 
   const supabase = await createSupabaseServerClient();
@@ -43,7 +55,7 @@ export async function signUpAdmin(formData: {
     email: parsed.data.email,
     password: parsed.data.password,
     options: {
-      data: { role: "admin" },
+      data: { role: "admin", name: parsed.data.name },
     },
   });
 

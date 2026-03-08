@@ -5,6 +5,7 @@ import { ArrowLeft, Users, TrendingUp, Percent, Trophy } from "lucide-react";
 import { requireAdmin } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 
 import { AnalyticsCharts } from "./charts";
@@ -45,17 +46,56 @@ export default async function AnalyticsPage({ params }: AnalyticsPageProps) {
   // --- Empty state ---
   if (totalAttempts === 0) {
     return (
-      <div className="p-6 lg:p-8">
-        <Button variant="ghost" size="sm" asChild className="mb-4">
+      <div className="p-6 lg:p-8 space-y-6">
+        <Button variant="ghost" size="sm" asChild>
           <Link href={`/admin/exams/${examId}`}>
             <ArrowLeft className="h-4 w-4" />
             Back to Exam
           </Link>
         </Button>
 
-        <h1 className="mb-6 text-2xl font-bold tracking-tight">
-          Analytics &mdash; {exam.title}
-        </h1>
+        {/* Header */}
+        <div className="flex items-center gap-3">
+          <h1 className="text-2xl font-bold tracking-tight">{exam.title}</h1>
+          <Badge
+            variant={exam.isPublished ? "default" : "secondary"}
+            className={
+              exam.isPublished
+                ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800"
+                : ""
+            }
+          >
+            {exam.isPublished ? "Published" : "Draft"}
+          </Badge>
+        </div>
+
+        {/* Sub-navigation */}
+        <nav className="flex items-center gap-1 border-b">
+          <Link
+            href={`/admin/exams/${examId}`}
+            className="border-b-2 border-transparent px-4 py-2.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+          >
+            Overview
+          </Link>
+          <Link
+            href={`/admin/exams/${examId}/candidates`}
+            className="border-b-2 border-transparent px-4 py-2.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+          >
+            Candidates
+          </Link>
+          <Link
+            href={`/admin/exams/${examId}/results`}
+            className="border-b-2 border-transparent px-4 py-2.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+          >
+            Results
+          </Link>
+          <Link
+            href={`/admin/exams/${examId}/analytics`}
+            className="border-b-2 border-primary px-4 py-2.5 text-sm font-medium text-primary"
+          >
+            Analytics
+          </Link>
+        </nav>
 
         <Card>
           <CardContent className="flex flex-col items-center justify-center py-16">
@@ -190,93 +230,113 @@ export default async function AnalyticsPage({ params }: AnalyticsPageProps) {
     }))
     .sort((a, b) => a.correctPercent - b.correctPercent);
 
+  const primaryStats = [
+    { label: "Total Attempts", value: String(totalAttempts), icon: Users, color: "text-primary" },
+    { label: "Average Score", value: `${avgScore.toFixed(1)} / ${totalMarks}`, icon: TrendingUp, color: "text-emerald-600 dark:text-emerald-400" },
+    { label: "Pass Rate", value: `${passRate.toFixed(1)}%`, icon: Percent, color: "text-amber-600 dark:text-amber-400" },
+    { label: "Highest Score", value: `${highestScore} / ${totalMarks}`, icon: Trophy, color: "text-violet-600 dark:text-violet-400" },
+  ];
+
   return (
-    <div className="p-6 lg:p-8">
+    <div className="p-6 lg:p-8 space-y-6">
       {/* Back link */}
-      <Button variant="ghost" size="sm" asChild className="mb-4">
+      <Button variant="ghost" size="sm" asChild>
         <Link href={`/admin/exams/${examId}`}>
           <ArrowLeft className="h-4 w-4" />
           Back to Exam
         </Link>
       </Button>
 
-      <h1 className="mb-6 text-2xl font-bold tracking-tight">
-        Analytics &mdash; {exam.title}
-      </h1>
-
-      {/* Stat cards */}
-      <div className="mb-8 grid grid-cols-2 gap-4 md:grid-cols-4">
-        <Card>
-          <CardContent className="flex items-center gap-3 p-4">
-            <Users className="text-muted-foreground h-5 w-5 shrink-0" />
-            <div>
-              <p className="text-muted-foreground text-xs">Total Attempts</p>
-              <p className="text-sm font-semibold">{totalAttempts}</p>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent className="flex items-center gap-3 p-4">
-            <TrendingUp className="text-muted-foreground h-5 w-5 shrink-0" />
-            <div>
-              <p className="text-muted-foreground text-xs">Average Score</p>
-              <p className="text-sm font-semibold">
-                {avgScore.toFixed(1)} / {totalMarks}
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent className="flex items-center gap-3 p-4">
-            <Percent className="text-muted-foreground h-5 w-5 shrink-0" />
-            <div>
-              <p className="text-muted-foreground text-xs">Pass Rate</p>
-              <p className="text-sm font-semibold">{passRate.toFixed(1)}%</p>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent className="flex items-center gap-3 p-4">
-            <Trophy className="text-muted-foreground h-5 w-5 shrink-0" />
-            <div>
-              <p className="text-muted-foreground text-xs">Highest Score</p>
-              <p className="text-sm font-semibold">
-                {highestScore} / {totalMarks}
-              </p>
-            </div>
-          </CardContent>
-        </Card>
+      {/* Header */}
+      <div className="flex items-center gap-3">
+        <h1 className="text-2xl font-bold tracking-tight">{exam.title}</h1>
+        <Badge
+          variant={exam.isPublished ? "default" : "secondary"}
+          className={
+            exam.isPublished
+              ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800"
+              : ""
+          }
+        >
+          {exam.isPublished ? "Published" : "Draft"}
+        </Badge>
       </div>
 
-      {/* Additional stats row */}
-      <div className="mb-8 grid grid-cols-2 gap-4 md:grid-cols-3">
+      {/* Sub-navigation */}
+      <nav className="flex items-center gap-1 border-b">
+        <Link
+          href={`/admin/exams/${examId}`}
+          className="border-b-2 border-transparent px-4 py-2.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+        >
+          Overview
+        </Link>
+        <Link
+          href={`/admin/exams/${examId}/candidates`}
+          className="border-b-2 border-transparent px-4 py-2.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+        >
+          Candidates
+        </Link>
+        <Link
+          href={`/admin/exams/${examId}/results`}
+          className="border-b-2 border-transparent px-4 py-2.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+        >
+          Results
+        </Link>
+        <Link
+          href={`/admin/exams/${examId}/analytics`}
+          className="border-b-2 border-primary px-4 py-2.5 text-sm font-medium text-primary"
+        >
+          Analytics
+        </Link>
+      </nav>
+
+      {/* Primary stat cards */}
+      <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+        {primaryStats.map((stat) => (
+          <Card key={stat.label}>
+            <CardContent className="p-5">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                  {stat.label}
+                </span>
+                <stat.icon className={`h-4 w-4 ${stat.color}`} />
+              </div>
+              <p className="text-2xl font-bold tracking-tight">{stat.value}</p>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      {/* Secondary stats row */}
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
         <Card>
-          <CardContent className="p-4">
-            <p className="text-muted-foreground text-xs">Median Score</p>
-            <p className="text-sm font-semibold">
+          <CardContent className="p-5">
+            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-3">
+              Median Score
+            </p>
+            <p className="text-2xl font-bold tracking-tight">
               {medianScore.toFixed(1)} / {totalMarks}
             </p>
           </CardContent>
         </Card>
 
         <Card>
-          <CardContent className="p-4">
-            <p className="text-muted-foreground text-xs">Lowest Score</p>
-            <p className="text-sm font-semibold">
+          <CardContent className="p-5">
+            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-3">
+              Lowest Score
+            </p>
+            <p className="text-2xl font-bold tracking-tight">
               {lowestScore} / {totalMarks}
             </p>
           </CardContent>
         </Card>
 
         <Card>
-          <CardContent className="p-4">
-            <p className="text-muted-foreground text-xs">
+          <CardContent className="p-5">
+            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-3">
               Score Range
             </p>
-            <p className="text-sm font-semibold">
+            <p className="text-2xl font-bold tracking-tight">
               {(highestScore - lowestScore).toFixed(1)} marks
             </p>
           </CardContent>

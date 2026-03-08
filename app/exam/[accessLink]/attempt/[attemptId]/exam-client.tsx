@@ -215,8 +215,8 @@ export function ExamClient({
   return (
     <>
       {/* Header */}
-      <header className="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-6 py-3 shrink-0 z-10 shadow-sm">
-        <div className="flex items-center gap-4 text-slate-900 dark:text-white">
+      <header className="flex items-center justify-between whitespace-nowrap border-b border-solid border-border bg-card px-6 py-3 shrink-0 z-10 shadow-sm">
+        <div className="flex items-center gap-4 text-foreground">
           <div className="flex items-center justify-center rounded-lg bg-primary/10 overflow-hidden">
             <Image
               src="/GC LOGO.png"
@@ -227,10 +227,10 @@ export function ExamClient({
             />
           </div>
           <div className="hidden sm:block">
-            <h2 className="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-tight">
+            <h2 className="text-foreground text-lg font-bold leading-tight tracking-tight">
               {examTitle}
             </h2>
-            <p className="text-xs text-slate-500 dark:text-slate-400">
+            <p className="text-xs text-muted-foreground">
               {candidateName}
             </p>
           </div>
@@ -281,12 +281,12 @@ export function ExamClient({
 
       {/* Main Content Area */}
       <main className="flex flex-1 overflow-hidden">
-        <div className="flex-1 flex flex-col h-full overflow-y-auto bg-background-light dark:bg-background-dark p-4 md:p-8 lg:p-12 relative">
+        <div className="flex-1 flex flex-col h-full overflow-y-auto bg-background p-4 md:p-8 lg:p-12 relative">
           <div className="max-w-3xl mx-auto w-full flex flex-col h-full">
             {/* Progress Header */}
             <div className="mb-6 flex flex-col gap-2">
               <div className="flex justify-between items-end">
-                <span className="text-slate-500 dark:text-slate-400 text-sm font-medium uppercase tracking-wider">
+                <span className="text-muted-foreground text-sm font-medium uppercase tracking-wider">
                   {section?.title
                     ? `${section.title} — Question ${progress.current} of ${progress.total}`
                     : `Question ${progress.current} of ${progress.total}`}
@@ -295,7 +295,7 @@ export function ExamClient({
                   {progressPercent}%
                 </span>
               </div>
-              <div className="h-1.5 w-full bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+              <div className="h-1.5 w-full bg-muted rounded-full overflow-hidden">
                 <div
                   className="h-full bg-primary rounded-full transition-all duration-500 ease-out"
                   style={{ width: `${progressPercent}%` }}
@@ -305,10 +305,10 @@ export function ExamClient({
 
             {/* Loading State */}
             {loading && (
-              <div className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-6 md:p-10 flex-1 flex items-center justify-center">
+              <div className="bg-card rounded-xl shadow-sm border border-border p-6 md:p-10 flex-1 flex items-center justify-center">
                 <div className="flex flex-col items-center gap-4">
                   <div className="h-8 w-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
-                  <p className="text-slate-500 dark:text-slate-400 text-sm">
+                  <p className="text-muted-foreground text-sm">
                     Loading question...
                   </p>
                 </div>
@@ -317,7 +317,7 @@ export function ExamClient({
 
             {/* Error State */}
             {error && !loading && (
-              <div className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-red-200 dark:border-red-800 p-6 md:p-10 flex-1 flex flex-col items-center justify-center gap-4">
+              <div className="bg-card rounded-xl shadow-sm border border-red-200 dark:border-red-800 p-6 md:p-10 flex-1 flex flex-col items-center justify-center gap-4">
                 <span className="material-symbols-outlined text-red-500 text-[48px]">
                   error
                 </span>
@@ -335,15 +335,15 @@ export function ExamClient({
 
             {/* All Questions Answered State */}
             {allAnswered && !loading && !error && (
-              <div className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-6 md:p-10 flex-1 flex flex-col items-center justify-center gap-6">
+              <div className="bg-card rounded-xl shadow-sm border border-border p-6 md:p-10 flex-1 flex flex-col items-center justify-center gap-6">
                 <span className="material-symbols-outlined text-green-500 text-[64px]">
                   check_circle
                 </span>
                 <div className="text-center">
-                  <h2 className="text-slate-900 dark:text-white text-2xl font-bold mb-2">
+                  <h2 className="text-foreground text-2xl font-bold mb-2">
                     All Questions Answered!
                   </h2>
-                  <p className="text-slate-500 dark:text-slate-400">
+                  <p className="text-muted-foreground">
                     You have answered all questions. You can now submit your
                     exam.
                   </p>
@@ -387,7 +387,7 @@ export function ExamClient({
 
             {/* Question Card */}
             {question && !loading && !error && !allAnswered && (
-              <div className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-6 md:p-10 flex-1 flex flex-col">
+              <div className="bg-card rounded-xl shadow-sm border border-border p-6 md:p-10 flex-1 flex flex-col">
                 <QuestionDisplay
                   question={question}
                   selectedAnswer={selectedAnswer}
@@ -397,7 +397,7 @@ export function ExamClient({
 
                 {/* Question Image */}
                 {question.imageUrl && (
-                  <div className="mt-4 rounded-lg overflow-hidden border border-slate-200 dark:border-slate-700">
+                  <div className="mt-4 rounded-lg overflow-hidden border border-border">
                     <img
                       src={question.imageUrl}
                       alt="Question illustration"
@@ -407,11 +407,11 @@ export function ExamClient({
                 )}
 
                 {/* Action Buttons */}
-                <div className="flex items-center justify-between mt-8 pt-6 border-t border-slate-100 dark:border-slate-800">
+                <div className="flex items-center justify-between mt-8 pt-6 border-t border-border">
                   <button
                     onClick={handleSkip}
                     disabled={submitting}
-                    className="flex items-center gap-2 px-6 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="flex items-center gap-2 px-6 py-2.5 rounded-lg border border-border text-muted-foreground hover:bg-accent hover:text-foreground font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <span className="material-symbols-outlined text-[20px]">
                       skip_next
@@ -442,7 +442,7 @@ export function ExamClient({
             )}
 
             {/* Footer Info */}
-            <div className="mt-4 text-center text-slate-400 text-xs">
+            <div className="mt-4 text-center text-muted-foreground text-xs">
               Attempt: {attemptId.slice(0, 8)}... &bull; Time remaining:{" "}
               {formatted}
             </div>

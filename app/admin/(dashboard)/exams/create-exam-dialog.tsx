@@ -41,7 +41,7 @@ export function CreateExamDialog({ open, onOpenChange }: CreateExamDialogProps) 
     setValue,
     formState: { errors },
   } = useForm<CreateExamInput>({
-    resolver: zodResolver(createExamSchema),
+    resolver: zodResolver(createExamSchema) as any,
     defaultValues: {
       title: "",
       description: "",

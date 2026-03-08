@@ -1,5 +1,6 @@
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { prisma } from "@/lib/prisma";
+import { redirect } from "next/navigation";
 
 export async function getCurrentAdmin() {
   const supabase = await createSupabaseServerClient();
@@ -7,8 +8,14 @@ export async function getCurrentAdmin() {
 
   if (!user) return null;
 
-  const admin = await prisma.admin.findUnique({
+  const admin = await prisma.admin.upsert({
     where: { supabaseId: user.id },
+    create: {
+      supabaseId: user.id,
+      name: user.user_metadata?.name ?? user.email ?? "Admin",
+      email: user.email ?? "",
+    },
+    update: {},
   });
 
   return admin;
@@ -17,7 +24,7 @@ export async function getCurrentAdmin() {
 export async function requireAdmin() {
   const admin = await getCurrentAdmin();
   if (!admin) {
-    throw new Error("Unauthorized");
+    redirect("/admin/login");
   }
   return admin;
 }

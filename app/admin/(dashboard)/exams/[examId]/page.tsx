@@ -14,7 +14,6 @@ import { prisma } from "@/lib/prisma";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
 
 import { SectionManager } from "./sections/section-manager";
 
@@ -43,7 +42,6 @@ export default async function ExamDetailPage({ params }: ExamDetailPageProps) {
     notFound();
   }
 
-  // Serialize data for client component
   const sectionsData = exam.sections.map((section) => ({
     id: section.id,
     title: section.title,
@@ -62,10 +60,23 @@ export default async function ExamDetailPage({ params }: ExamDetailPageProps) {
     })),
   }));
 
+  const totalQuestions = sectionsData.reduce(
+    (sum, s) => sum + s.questions.length,
+    0
+  );
+
+  const metadata = [
+    { label: "Duration", value: `${exam.durationMinutes} min`, icon: Clock },
+    { label: "Total Marks", value: String(exam.totalMarks), icon: Award },
+    { label: "Passing %", value: `${Number(exam.passingPercentage)}%`, icon: Percent },
+    { label: "Candidates", value: String(exam._count.candidates), icon: Users },
+    { label: "Access Link", value: exam.accessLink, icon: LinkIcon, truncate: true },
+  ];
+
   return (
-    <div className="p-6 lg:p-8">
+    <div className="p-6 lg:p-8 space-y-6">
       {/* Back link */}
-      <Button variant="ghost" size="sm" asChild className="mb-4">
+      <Button variant="ghost" size="sm" asChild>
         <Link href="/admin/exams">
           <ArrowLeft className="h-4 w-4" />
           Back to Exams
@@ -73,15 +84,15 @@ export default async function ExamDetailPage({ params }: ExamDetailPageProps) {
       </Button>
 
       {/* Exam header */}
-      <div className="mb-6 flex items-start justify-between">
-        <div>
+      <div className="flex items-start justify-between">
+        <div className="space-y-1">
           <div className="flex items-center gap-3">
             <h1 className="text-2xl font-bold tracking-tight">{exam.title}</h1>
             <Badge
               variant={exam.isPublished ? "default" : "secondary"}
               className={
                 exam.isPublished
-                  ? "bg-green-600 text-white hover:bg-green-600/90"
+                  ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800"
                   : ""
               }
             >
@@ -89,76 +100,57 @@ export default async function ExamDetailPage({ params }: ExamDetailPageProps) {
             </Badge>
           </div>
           {exam.description && (
-            <p className="text-muted-foreground mt-1 text-sm">
+            <p className="text-sm text-muted-foreground max-w-2xl">
               {exam.description}
             </p>
           )}
         </div>
-        <Button variant="outline" asChild>
-          <Link href={`/admin/exams/${examId}`}>Edit Exam</Link>
-        </Button>
       </div>
+
+      {/* Sub-navigation */}
+      <nav className="flex items-center gap-1 border-b">
+        <Link
+          href={`/admin/exams/${examId}`}
+          className="border-b-2 border-primary px-4 py-2.5 text-sm font-medium text-primary"
+        >
+          Overview
+        </Link>
+        <Link
+          href={`/admin/exams/${examId}/candidates`}
+          className="border-b-2 border-transparent px-4 py-2.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+        >
+          Candidates
+        </Link>
+        <Link
+          href={`/admin/exams/${examId}/results`}
+          className="border-b-2 border-transparent px-4 py-2.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+        >
+          Results
+        </Link>
+        <Link
+          href={`/admin/exams/${examId}/analytics`}
+          className="border-b-2 border-transparent px-4 py-2.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+        >
+          Analytics
+        </Link>
+      </nav>
 
       {/* Metadata cards */}
-      <div className="mb-8 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
-        <Card>
-          <CardContent className="flex items-center gap-3 p-4">
-            <Clock className="text-muted-foreground h-5 w-5 shrink-0" />
-            <div>
-              <p className="text-muted-foreground text-xs">Duration</p>
-              <p className="text-sm font-semibold">
-                {exam.durationMinutes} min
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent className="flex items-center gap-3 p-4">
-            <Award className="text-muted-foreground h-5 w-5 shrink-0" />
-            <div>
-              <p className="text-muted-foreground text-xs">Total Marks</p>
-              <p className="text-sm font-semibold">{exam.totalMarks}</p>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent className="flex items-center gap-3 p-4">
-            <Percent className="text-muted-foreground h-5 w-5 shrink-0" />
-            <div>
-              <p className="text-muted-foreground text-xs">Passing %</p>
-              <p className="text-sm font-semibold">
-                {Number(exam.passingPercentage)}%
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent className="flex items-center gap-3 p-4">
-            <Users className="text-muted-foreground h-5 w-5 shrink-0" />
-            <div>
-              <p className="text-muted-foreground text-xs">Candidates</p>
-              <p className="text-sm font-semibold">{exam._count.candidates}</p>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent className="flex items-center gap-3 p-4">
-            <LinkIcon className="text-muted-foreground h-5 w-5 shrink-0" />
-            <div>
-              <p className="text-muted-foreground text-xs">Access Link</p>
-              <p className="truncate text-sm font-semibold">
-                {exam.accessLink}
-              </p>
-            </div>
-          </CardContent>
-        </Card>
+      <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-5">
+        {metadata.map((item) => (
+          <Card key={item.label}>
+            <CardContent className="flex items-center gap-3 p-4">
+              <item.icon className="h-4 w-4 text-muted-foreground shrink-0" />
+              <div className="min-w-0">
+                <p className="text-xs text-muted-foreground">{item.label}</p>
+                <p className={`text-sm font-semibold ${item.truncate ? "truncate" : ""}`}>
+                  {item.value}
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
       </div>
-
-      <Separator className="mb-8" />
 
       {/* Section manager */}
       <SectionManager examId={examId} sections={sectionsData} />

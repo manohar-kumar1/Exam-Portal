@@ -6,10 +6,19 @@ import { createExamSchema, updateExamSchema } from "@/lib/validations/exam";
 import { nanoid } from "nanoid";
 import { revalidatePath } from "next/cache";
 
+// Convert Prisma Decimal fields to plain numbers for client serialization
+function serializeExam<T extends Record<string, unknown>>(exam: T): T {
+  return JSON.parse(JSON.stringify(exam, (_key, value) =>
+    typeof value === "object" && value !== null && "toNumber" in value
+      ? Number(value)
+      : value
+  ));
+}
+
 export async function createExam(input: unknown) {
   const admin = await requireAdmin();
   const parsed = createExamSchema.safeParse(input);
-  if (!parsed.success) return { error: parsed.error.errors[0].message };
+  if (!parsed.success) return { error: parsed.error.issues[0].message };
 
   const exam = await prisma.exam.create({
     data: {
@@ -20,13 +29,13 @@ export async function createExam(input: unknown) {
   });
 
   revalidatePath("/admin/exams");
-  return { data: exam };
+  return { data: serializeExam(exam) };
 }
 
 export async function updateExam(examId: string, input: unknown) {
   const admin = await requireAdmin();
   const parsed = updateExamSchema.safeParse(input);
-  if (!parsed.success) return { error: parsed.error.errors[0].message };
+  if (!parsed.success) return { error: parsed.error.issues[0].message };
 
   const exam = await prisma.exam.findFirst({
     where: { id: examId, adminId: admin.id },
@@ -40,7 +49,7 @@ export async function updateExam(examId: string, input: unknown) {
 
   revalidatePath(`/admin/exams/${examId}`);
   revalidatePath("/admin/exams");
-  return { data: updated };
+  return { data: serializeExam(updated) };
 }
 
 export async function deleteExam(examId: string) {
@@ -71,7 +80,7 @@ export async function togglePublishExam(examId: string) {
   });
 
   revalidatePath("/admin/exams");
-  return { data: updated };
+  return { data: serializeExam(updated) };
 }
 
 export async function duplicateExam(examId: string) {
@@ -122,5 +131,5 @@ export async function duplicateExam(examId: string) {
   });
 
   revalidatePath("/admin/exams");
-  return { data: newExam };
+  return { data: serializeExam(newExam) };
 }

@@ -4,6 +4,7 @@ import { useTransition, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { ClipboardList } from "lucide-react";
 
 import {
   candidateSignInSchema,
@@ -11,13 +12,6 @@ import {
 } from "@/lib/validations/auth";
 
 import { signInCandidate, startExam } from "../actions";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -73,18 +67,29 @@ export default function CandidateLoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background-light dark:bg-background-dark p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader>
-          <CardTitle className="text-2xl">Exam Login</CardTitle>
-          <CardDescription>
-            Enter your credentials to start the exam
-          </CardDescription>
-        </CardHeader>
+    <div className="min-h-screen bg-background flex flex-col">
+      {/* Header */}
+      <header className="border-b bg-card">
+        <div className="max-w-2xl mx-auto flex items-center gap-2.5 px-6 h-14">
+          <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary text-white">
+            <ClipboardList className="h-3.5 w-3.5" />
+          </div>
+          <span className="font-semibold tracking-tight">Exam Portal</span>
+        </div>
+      </header>
 
-        <CardContent>
+      {/* Content */}
+      <main className="flex-1 flex items-center justify-center p-6">
+        <div className="w-full max-w-sm space-y-8">
+          <div className="space-y-2">
+            <h1 className="text-2xl font-bold tracking-tight">Candidate Login</h1>
+            <p className="text-sm text-muted-foreground">
+              Enter your credentials to start the assessment
+            </p>
+          </div>
+
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
               <FormField
                 control={form.control}
                 name="username"
@@ -124,16 +129,22 @@ export default function CandidateLoginPage() {
               />
 
               {serverError && (
-                <p className="text-sm text-destructive">{serverError}</p>
+                <div className="rounded-lg bg-destructive/10 px-4 py-3 text-sm text-destructive">
+                  {serverError}
+                </div>
               )}
 
-              <Button type="submit" className="w-full" disabled={isPending}>
-                {isPending ? "Starting..." : "Start Exam"}
+              <Button type="submit" className="w-full" size="lg" disabled={isPending}>
+                {isPending ? "Starting assessment..." : "Start Assessment"}
               </Button>
             </form>
           </Form>
-        </CardContent>
-      </Card>
+
+          <p className="text-center text-xs text-muted-foreground">
+            Access code: <code className="font-mono text-foreground">{params.accessLink}</code>
+          </p>
+        </div>
+      </main>
     </div>
   );
 }

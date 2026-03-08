@@ -15,7 +15,11 @@
       "Bash(find:*)",
       "Bash(npm install:*)",
       "Bash(pnpm prisma:*)",
-      "Bash(xargs grep:*)"
+      "Bash(xargs grep:*)",
+      "Bash(cat:*)",
+      "Bash(curl:*)",
+      "Bash(npx tsx:*)",
+      "Bash(npx next:*)"
     ]
   }
 }

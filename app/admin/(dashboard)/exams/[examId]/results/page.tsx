@@ -5,8 +5,8 @@ import { ArrowLeft, Users, TrendingUp, Percent } from "lucide-react";
 import { requireAdmin } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
 
 import { ResultsTable } from "./results-table";
 
@@ -25,6 +25,7 @@ export default async function ResultsPage({ params }: ResultsPageProps) {
       title: true,
       totalMarks: true,
       passingPercentage: true,
+      isPublished: true,
     },
   });
 
@@ -40,7 +41,6 @@ export default async function ResultsPage({ params }: ResultsPageProps) {
     orderBy: { totalScore: "desc" },
   });
 
-  // Serialize Decimal fields to numbers for client component
   const totalMarks = exam.totalMarks;
   const passingPercentage = Number(exam.passingPercentage);
 
@@ -59,7 +59,6 @@ export default async function ResultsPage({ params }: ResultsPageProps) {
     submittedAt: attempt.submittedAt?.toISOString() ?? null,
   }));
 
-  // Summary stats
   const totalAttempts = attemptsData.length;
   const averageScore =
     totalAttempts > 0
@@ -73,57 +72,81 @@ export default async function ResultsPage({ params }: ResultsPageProps) {
       : 0;
   const passRate = totalAttempts > 0 ? (passCount / totalAttempts) * 100 : 0;
 
+  const stats = [
+    { label: "Total Attempts", value: String(totalAttempts), icon: Users, color: "text-primary" },
+    { label: "Average Score", value: `${averageScore.toFixed(1)} / ${totalMarks}`, icon: TrendingUp, color: "text-emerald-600 dark:text-emerald-400" },
+    { label: "Pass Rate", value: `${passRate.toFixed(1)}%`, icon: Percent, color: "text-amber-600 dark:text-amber-400" },
+  ];
+
   return (
-    <div className="p-6 lg:p-8">
+    <div className="p-6 lg:p-8 space-y-6">
       {/* Back link */}
-      <Button variant="ghost" size="sm" asChild className="mb-4">
+      <Button variant="ghost" size="sm" asChild>
         <Link href={`/admin/exams/${examId}`}>
           <ArrowLeft className="h-4 w-4" />
           Back to Exam
         </Link>
       </Button>
 
-      {/* Title */}
-      <h1 className="mb-6 text-2xl font-bold tracking-tight">
-        Results &mdash; {exam.title}
-      </h1>
-
-      {/* Summary stats */}
-      <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <Card>
-          <CardContent className="flex items-center gap-3 p-4">
-            <Users className="text-muted-foreground h-5 w-5 shrink-0" />
-            <div>
-              <p className="text-muted-foreground text-xs">Total Attempts</p>
-              <p className="text-sm font-semibold">{totalAttempts}</p>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent className="flex items-center gap-3 p-4">
-            <TrendingUp className="text-muted-foreground h-5 w-5 shrink-0" />
-            <div>
-              <p className="text-muted-foreground text-xs">Average Score</p>
-              <p className="text-sm font-semibold">
-                {averageScore.toFixed(1)} / {totalMarks}
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent className="flex items-center gap-3 p-4">
-            <Percent className="text-muted-foreground h-5 w-5 shrink-0" />
-            <div>
-              <p className="text-muted-foreground text-xs">Pass Rate</p>
-              <p className="text-sm font-semibold">{passRate.toFixed(1)}%</p>
-            </div>
-          </CardContent>
-        </Card>
+      {/* Header */}
+      <div className="flex items-center gap-3">
+        <h1 className="text-2xl font-bold tracking-tight">{exam.title}</h1>
+        <Badge
+          variant={exam.isPublished ? "default" : "secondary"}
+          className={
+            exam.isPublished
+              ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800"
+              : ""
+          }
+        >
+          {exam.isPublished ? "Published" : "Draft"}
+        </Badge>
       </div>
 
-      <Separator className="mb-8" />
+      {/* Sub-navigation */}
+      <nav className="flex items-center gap-1 border-b">
+        <Link
+          href={`/admin/exams/${examId}`}
+          className="border-b-2 border-transparent px-4 py-2.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+        >
+          Overview
+        </Link>
+        <Link
+          href={`/admin/exams/${examId}/candidates`}
+          className="border-b-2 border-transparent px-4 py-2.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+        >
+          Candidates
+        </Link>
+        <Link
+          href={`/admin/exams/${examId}/results`}
+          className="border-b-2 border-primary px-4 py-2.5 text-sm font-medium text-primary"
+        >
+          Results
+        </Link>
+        <Link
+          href={`/admin/exams/${examId}/analytics`}
+          className="border-b-2 border-transparent px-4 py-2.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+        >
+          Analytics
+        </Link>
+      </nav>
+
+      {/* Summary stats */}
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+        {stats.map((stat) => (
+          <Card key={stat.label}>
+            <CardContent className="p-5">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                  {stat.label}
+                </span>
+                <stat.icon className={`h-4 w-4 ${stat.color}`} />
+              </div>
+              <p className="text-2xl font-bold tracking-tight">{stat.value}</p>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
 
       {/* Results table */}
       <ResultsTable

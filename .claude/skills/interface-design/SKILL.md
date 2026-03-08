@@ -5,342 +5,270 @@ description: Use this skill whenever the task is to design, redesign, refine, cr
 
 # Interface Design
 
-Build interface design with craft and consistency. Every design decision should be authored, not defaulted.
+Build interfaces with intent, psychology, and craft. Every decision is authored, never defaulted.
 
-## When to Use This Skill
+## When to Use
 
-**Use for:** Dashboards, admin panels, SaaS apps, tools, settings pages, data interfaces, charts, form flows, data tables, component libraries for web apps.
+Dashboards, admin panels, SaaS apps, tools, settings pages, data interfaces, charts, form flows, data tables, component libraries for web apps.
 
 ## Operating Modes
 
-- **Build / redesign** — Create or revise interface direction, then implement it.
-- **Critique / audit** — Diagnose what defaulted, what lacks hierarchy, and what should change.
-- **Teach / explain** — Explain why a UI choice works, what is generic, and how to make decisions more intentional.
+- **Build / redesign** — Create or revise interface direction, then implement.
+- **Critique / audit** — Diagnose what defaulted, what lacks hierarchy, what should change.
+- **Teach / explain** — Explain why a choice works, what is generic, how to make decisions intentional.
 
-## The Sequential Design Flow
+---
 
-Every interface task follows this sequence. Do not skip or reorder steps.
+## Core Philosophy: Kill the Default
+
+The enemy is not ugly design. It is *default* design — the output you get when no human made a real choice. Default spacing, default card layouts, default sidebar widths, default color schemes. These produce interfaces that are technically correct but feel like they came off an assembly line.
+
+Three rules govern everything in this skill:
+
+**1. Never ship the first idea.** The first layout, color scheme, or component structure that comes to mind is almost always a pattern you've absorbed from seeing a thousand other interfaces. It works, but it's forgettable. Before committing to any direction, explore at least two alternative approaches. The goal is not to be different for its own sake — it is to find the approach that genuinely fits this specific product and its users.
+
+**2. Every decision needs a "because."** Why this layout? Why this color temperature? Why this spacing density? If the answer is "it's standard" or "it looks clean" — you have not yet designed. You have assembled. The "because" should trace back to: who the user is, what they are trying to accomplish, how the interface should make them feel, or a specific design psychology principle.
+
+**3. Design for the human, not the screen.** The person using this interface has a context — they are tired, or they are in a hurry, or they are anxious about making the right choice. The teacher grading exams at 7am is not the developer debugging at midnight. Their emotional state, cognitive load, and physical environment shape every design decision.
+
+---
+
+## The Design Flow
+
+Every interface task follows this sequence. Steps can be brief for small changes, but the thinking should always happen.
 
 ```
-Step 1: Requirements    → Understand who, what, and how it should feel
-Step 2: Current Design  → Audit what already exists (redesign) or identify constraints (greenfield)
-Step 3: Principles      → Ground decisions in design principles and systems thinking
-Step 4: Psychology      → Apply perception and decision-making laws to the structure
-Step 5: Domain          → Explore the product's world — colors, metaphors, signature
-Step 6: Propose         → State direction, referencing domain + principles + psychology
-Step 7: Build           → Implement with craft; run component checklist before each piece
-Step 8: Evaluate        → Run the pre-presentation checks; fix before showing
-Step 9: Wrap Up         → Surface the decisions that matter most
+Step 1: Understand    → Who, what, why, how it should feel
+Step 2: Audit         → What exists, what defaulted, what works
+Step 3: Diverge       → Explore 2-3 genuinely different approaches
+Step 4: Converge      → Pick the right direction (with the user)
+Step 5: Psychology     → Apply perception and decision laws to the structure
+Step 6: Build         → Implement with craft, direction + code
+Step 7: Evaluate      → Run quality checks before showing
 ```
 
-Read `references/example.md` if unsure how subtle layering translates into real component decisions.
+---
+
+# Step 1 — Understand: Ask Before You Design
+
+Before touching any component, establish context. If the request already answers these, paraphrase and proceed. If not, ask — never guess.
+
+**Who is this person?** Not "users." The actual human. Where are they when they open this? What is on their mind? A teacher reviewing submissions at 7am has different needs than a founder checking metrics between investor calls. Their world shapes density, tone, color temperature, and information priority.
+
+**What must they accomplish?** Not "use the dashboard." The verb. Grade these submissions. Find the broken deployment. Approve the payment. The answer determines what leads, what follows, and what hides.
+
+**How should this feel?** "Clean and modern" means nothing — every AI says that. Be specific: warm like a notebook? Cold like a terminal? Dense like a trading floor? Calm like a reading app? The feel constrains color, type, spacing, density — everything.
+
+**What is the developer's context?** What tech stack, component library, design tokens already exist? What constraints are non-negotiable? Understanding developer needs prevents beautiful designs that are impossible to implement.
 
 ---
 
-# Step 1 — Requirements: Understand the Human and the Task
+# Step 2 — Audit: Understand What Exists
 
-Before anything else, establish who you are designing for, what they need to do, and how it should feel. Without this, every subsequent decision has no foundation and will default to generic.
+## For Redesign or Improvement
 
-You will produce generic output unless you actively catch where defaults sneak in. Typography, navigation, data presentation, spacing, token naming, and layout all masquerade as infrastructure. They are not infrastructure. They are the design.
+Before changing anything, read the existing design:
 
-If the request already answers these questions, paraphrase and proceed. If not, ask — do not guess.
+- **What works?** Patterns users understand, structures they rely on, habits they have built. Preserve these — Jakob's Law means users carry cognitive models from the existing design.
+- **What defaulted?** Typography that is just "the readable default." Navigation that is just "the standard sidebar." Name these specifically.
+- **What is structurally broken?** Missing interaction states, inconsistent spacing, mixed depth strategies, harsh borders, flat text hierarchy.
+- **What was never designed?** Gaps where no decision was made and something just appeared. These are the biggest opportunities.
 
-## Who Is This Human?
+State your audit findings before proposing changes.
 
-Not "users." The actual person. Where are they when they open this? What's on their mind? What did they do 5 minutes ago, and what will they do 5 minutes after?
+## For Greenfield
 
-A teacher reviewing submissions at 7am is not a developer debugging at midnight is not a founder between investor meetings. Their world shapes the interface — density, tone, color temperature, information priority.
-
-## What Must They Accomplish?
-
-Not "use the dashboard." The verb. Grade these submissions. Find the broken deployment. Approve the payment. The answer determines what leads, what follows, and what hides.
-
-## What Should This Feel Like?
-
-Say it in words that mean something. "Clean and modern" means nothing — every AI says that. Warm like a notebook? Cold like a terminal? Dense like a trading floor? Calm like a reading app? The feel shapes color, type, spacing, density — everything.
-
-## Authoring Every Decision
-
-Treat every major decision as authored. The question is never just "does this work?" It is "why this choice for this product, this user, and this moment?"
-
-For every decision, you must explain WHY:
-- Why this layout and not another?
-- Why this color temperature?
-- Why this typeface?
-- Why this spacing scale?
-- Why this information hierarchy?
-
-If your answer is "it's common" or "it works" — you haven't chosen. You've defaulted. Defaults compound into generic output.
-
-**The test:** If you swapped every decision for the most common alternative and the design felt no different, you never made real choices.
+Identify constraints: platform, real content shape (not lorem ipsum), adjacent interfaces, existing design tokens and component libraries.
 
 ---
 
-# Step 2 — Current Design: Audit What Exists
+# Step 3 — Diverge: Explore Before You Commit
 
-Before moving to principles or exploring the domain, understand the current state.
+This is where most AI-generated design fails. The model picks the most statistically likely layout and goes with it. The result: every dashboard looks the same, every form has the same structure, every login page has the same centered card.
 
-## For a Redesign or Improvement
+**Generate at least 2-3 genuinely different approaches** before settling. These are not cosmetic variations (same layout, different colors). They are structurally different ideas:
 
-Audit the existing design before changing anything:
+- Different information architecture (what leads, what follows)
+- Different spatial strategies (dense vs. spacious, sidebar vs. top-nav, single-column vs. multi-panel)
+- Different emotional tones (serious vs. approachable, data-forward vs. narrative)
+- Different interaction models (everything visible vs. progressive disclosure)
 
-- **What's working?** Look for patterns the user clearly understands, structures they rely on, interactions they've built habits around. Preserve these — Jakob's Law means users carry cognitive models from the existing design.
-- **What defaulted?** Typography that's just "the readable default." Navigation that's just "the standard sidebar." Metric cards that could belong to any app. Name these specifically.
-- **What's broken structurally?** Missing interaction states, inconsistent spacing, mixed depth strategies, harsh borders, flat text hierarchy. These are the priority fixes.
-- **What did the user consciously not design?** Gaps where no decision was made and something just appeared. These are opportunities.
+For each approach, briefly articulate:
+- What this approach prioritizes
+- What it sacrifices
+- Which psychology principles it leans on
+- Why it might be the right fit
 
-State your audit findings before proposing changes. The user needs to agree on what's actually broken before seeing a fix.
-
-## For a Greenfield Build
-
-Identify the constraints and existing context:
-- What platform and technology? (web, mobile, desktop — each has native patterns Jakob's Law demands you respect)
-- What data and content will actually appear? Don't design for placeholder lorem ipsum — know the real content shape.
-- What's adjacent to this interface? If it lives inside an existing product, what visual language does that product already use?
-- Are there existing design tokens, fonts, or component libraries to extend?
+Present these to the user as genuine options, not one real choice and two strawmen.
 
 ---
 
-# Step 3 — Principles: Ground Decisions in Design Systems
+# Step 4 — Converge: Choose With the User
 
-These are the areas where defaults most commonly sneak in. Before building any component, run through this checklist mentally. For token-level implementation detail, CSS patterns, dark mode specifics, or control token guidance, read `references/principles.md`.
+Once a direction is chosen, ground it in the product's domain before building.
 
-- **Token architecture** — Every color traces to primitives: foreground, background, border, brand, semantic. No random hex values.
-- **Text hierarchy** — Four levels (primary, secondary, tertiary, muted), not two. Flat text hierarchy = flat design.
-- **Border progression** — Borders aren't binary. Scale intensity to match boundary importance.
-- **Control tokens** — Form controls get their own tokens, separate from surface tokens, so interactive elements can be tuned independently.
-- **Spacing** — Pick a base unit, use multiples everywhere. Random spacing values are the clearest sign of no system.
-- **Padding** — Symmetrical unless content genuinely requires asymmetry.
-- **Depth** — Choose ONE strategy (borders-only, subtle shadows, layered shadows, or surface shifts) and commit. Mixing approaches fragments the visual language.
-- **Border radius** — Sharper = technical, rounder = friendly. Build a consistent scale.
-- **Typography** — Combine size, weight, and letter-spacing. Size alone doesn't create hierarchy.
-- **Card layouts** — Design internal structure for each card's specific content, but keep surface treatment consistent.
-- **Controls** — Native `<select>` and `<input type="date">` render un-stylable OS elements. Build custom components.
-- **Iconography** — Icons clarify, not decorate. If removing an icon loses no meaning, remove it.
-- **Animation** — Fast micro-interactions (~150ms), smooth deceleration easing. Avoid spring/bounce in professional interfaces.
-- **States** — Every interactive element needs: default, hover, active, focus, disabled. Data needs: loading, empty, error. Missing states feel broken.
-- **Navigation context** — Screens need grounding. Include navigation, location indicators, and user context. Floating components feel like demos, not products.
-- **Dark mode** — Lean on borders over shadows (shadows disappear on dark backgrounds). Desaturate semantic colors slightly.
+**Domain exploration** — Find concepts, metaphors, and vocabulary from this product's world. Not features — territory. If this product were a physical space, what would you see? What colors, materials, lighting exist in that world?
+
+**Color world** — What colors belong naturally in this domain? A medical app lives in a different color world than a music production tool. List 5+ colors that exist in this product's physical domain.
+
+**Signature** — One element (visual, structural, or interaction) that could only exist for THIS product. If you can picture it in any generic dashboard, it is not a signature.
+
+**Defaults to reject** — Name 3 obvious "standard" choices for this interface type and decide what replaces each one.
+
+**The test:** Read your direction. Remove the product name. Could someone identify what this is for? If not, explore deeper.
 
 ---
 
-# Step 4 — Psychology: Apply Perception and Decision Laws
+# Step 5 — Psychology: Design for How Humans Actually Think
 
-Every layout, hierarchy, and interaction decision has a behavioral basis. Apply these before structuring the interface — they determine how users will perceive and navigate it. For the full reference with detailed examples, read `references/psychology.md`.
+These principles are not theory — they are the mechanics of human perception and decision-making. Apply the relevant ones during layout, hierarchy, and interaction decisions. Read `references/psychology.md` for the full reference with detailed examples.
 
-## Visual Hierarchy — Control Where the Eye Goes First
+## Guiding Attention
 
-Size, contrast, position, and white space direct attention before the user reads a single word. The Von Restorff effect (the thing that differs gets remembered) explains why CTAs use high-contrast accent colors. The F-pattern and Z-pattern describe where eyes travel on first scan — place the most critical content along these paths.
+**Visual Hierarchy** — Size, contrast, position, and white space direct attention before the user reads a word. The primary action or key metric should visually dominate. When everything competes equally, nothing wins.
 
-The primary action, key metric, or main content should visually dominate. When everything competes equally, nothing wins.
+**Von Restorff Effect** — The thing that differs from its surroundings gets remembered. This is why CTAs use contrasting colors — they break the pattern deliberately. Use isolation to make the most important action unmissable.
 
-## Typography Hierarchy — Make Structure Legible Before Reading
+**Figure/Ground** — The brain separates foreground objects from background. Use this actively: elevated cards on muted backgrounds, highlighted rows in tables, selected states that lift elements forward.
 
-Use a minimum of four levels: headline, subhead, body, caption. Distinguish them with size + weight + color combined — size alone is insufficient for clear scanning. Monospace for data, `tabular-nums` for numerical alignment.
+**Serial Position Effect** — People remember the first and last items in a sequence best. Place the most critical actions or information at the beginning and end of navigation, lists, and flows.
 
-## Interaction Laws
+## Managing Decisions
 
-Apply these during layout and component sizing decisions:
+**Hick's Law** — More choices = slower decisions. Use progressive disclosure, smart defaults, and grouped options (5-7 per group) to prevent choice paralysis. A settings page with 30 ungrouped toggles overwhelms; the same settings in 5 categories feels manageable.
 
-- **Hick's Law** — More choices = slower decisions. Use progressive disclosure, smart defaults, and grouped options (5–7 items per group) to prevent choice paralysis.
-- **Fitts's Law** — Larger, closer targets are faster to hit. Primary actions should be prominent and easy to reach; destructive actions should be smaller and away from primary ones.
-- **Miller's Law** — Humans hold ~7 items in working memory. Chunk navigation, options, and lists into perceivable groups. Use visual spacing and headers to make clusters obvious.
-- **Jakob's Law** — Users expect your interface to work like others they use daily. Respect conventions (logo → home, gear → settings, search icon → search) unless your alternative is unambiguously superior.
+**Miller's Law** — Humans hold ~7 items in working memory. Chunk navigation, form fields, and data into perceivable groups of 5-7. Use spacing and headers to make clusters obvious.
 
-## Gestalt Perception
+**Fitts's Law** — Larger, closer targets are faster to hit. Primary actions should be prominent and reachable. Destructive actions should be smaller and separated from primary ones.
 
-These operate automatically — design with them, not against them:
+## Familiarity and Perception
 
-- **Proximity** — Elements close together are perceived as a group. Consistent spacing within groups, larger gaps between groups.
-- **Similarity** — Same visual treatment signals same function. All clickable elements should share a visual trait. All status indicators should use consistent color coding.
-- **Closure** — The brain completes incomplete shapes. Use this for icons, carousels, and attention guidance.
+**Jakob's Law** — Users expect your interface to work like others they use daily. Respect conventions (logo top-left = home, gear = settings, X = close) unless your alternative is unambiguously superior.
+
+**Gestalt Principles** — The brain groups elements automatically:
+- *Proximity* — Close elements are perceived as a group. Spacing within groups < spacing between groups.
+- *Similarity* — Same visual treatment = same function. All clickable elements share traits.
+- *Closure* — The brain completes incomplete shapes. Use for icons, carousels, visual hints.
+- *Continuity* — Elements along a line or curve feel related. Use for progress flows and data trends.
 
 ## Cognitive Load
 
-Reducing mental effort prevents abandonment. Design for:
-- **Recognition over recall** — show options, don't require users to remember them
-- **Progressive disclosure** — show what's needed now; reveal advanced details on demand
-- **Clear wayfinding** — users should always know where they are, how they got here, and how to go back
+**Progressive Disclosure** — Show what is needed now; reveal complexity on demand. New users see simplicity; power users find depth behind one click.
 
-The aesthetic-usability effect means a polished interface earns patience. Users forgive functional flaws more readily in well-crafted designs.
+**Recognition over Recall** — Show options, do not require users to remember them. Dropdowns beat text inputs for known option sets. Recent items and favorites reduce navigation overhead.
 
----
+**Aesthetic-Usability Effect** — Users perceive polished interfaces as more usable and forgive functional flaws more readily. Visual craft is not decoration — it earns the user's trust and patience.
 
-# Step 5 — Domain: Find the Product's World
+## Memory and Emotional Retention
 
-This is where defaults get caught — or don't.
+**Peak-End Rule** — Users judge an experience by its most intense moment and how it ends. Celebrate completed tasks with success states, confirmation messages, or subtle delight animations. Make endings feel good.
 
-Generic output: Task type → Visual template → Theme
-Crafted output: Task type → Product domain → Signature → Structure + Expression
+**Zeigarnik Effect** — People remember incomplete tasks more than completed ones. Use progress indicators, step counters, and completion percentages to motivate users through multi-step flows like onboarding, profile setup, or form wizards.
 
-The difference: time spent in the product's world before any visual or structural thinking.
-
-## Four Required Outputs (Produce All Before Proposing)
-
-**Do not propose any direction until you produce all four:**
-
-**Domain:** Concepts, metaphors, vocabulary from this product's world. Not features — territory. Minimum 5.
-
-**Color world:** What colors exist naturally in this product's domain? Not "warm" or "cool" — go to the actual world. If this product were a physical space, what would you see? What colors belong there that don't belong elsewhere? List 5+.
-
-**Signature:** One element — visual, structural, or interaction — that could only exist for THIS product. If you can't name one, keep exploring.
-
-**Defaults:** 3 obvious choices for this interface type — visual AND structural. You can't avoid patterns you haven't named.
-
-## Intent Must Carry Through Every Token
-
-Saying "warm" and using cold colors is not following through. Intent is not a label — it's a constraint that shapes every decision.
-
-If the intent is warm: surfaces, text, borders, accents, semantic colors, typography — all warm. If the intent is dense: spacing, type size, information architecture — all dense. If the intent is calm: motion, contrast, color saturation — all calm.
-
-Check your output against your stated intent. Does every token reinforce it?
+**Color Psychology** — Colors evoke specific feelings. Blue conveys trust (banking, enterprise). Red signals urgency or danger (errors, destructive actions). Green signals success. Orange/yellow signals caution. Use color to reinforce meaning, never for decoration alone. Always provide redundant cues for colorblind users (icons, text, patterns alongside color).
 
 ---
 
-# Step 6 — Propose: State Direction Before Building
+# Step 6 — Build: Direction First, Then Code
 
-Your direction must explicitly reference all four domain outputs: concepts you explored, colors from the color world, your signature element, and what replaces each default.
+## The 8-Point Grid
 
-**The test:** Read your proposal. Remove the product name. Could someone identify what this is for? If not, it's generic. Explore deeper.
+All spacing, sizing, and layout decisions align to an 8px base grid. This creates consistent visual rhythm across every component:
 
-## Direction Proposal — What It Must Reference
+- **4px** — micro spacing (icon gaps, tight label pairs, inline element margins)
+- **8px** — minimum component spacing (padding within dense controls)
+- **16px** — standard component padding (cards, inputs, buttons)
+- **24px** — comfortable section spacing (between form groups, card clusters)
+- **32px** — major section separation
+- **48px / 64px** — page-level breathing room
 
-```
-Domain: [5+ concepts from the product's world]
-Color world: [5+ colors that exist in this domain]
-Signature: [one element unique to this product]
-Rejecting: [default 1] → [alternative], [default 2] → [alternative], [default 3] → [alternative]
-
-Direction: [approach that connects to the above]
-```
-
-Ask: "Does that direction feel right?" — only when the direction is genuinely ambiguous or there are multiple viable paths. If the direction is clear, state it briefly and proceed.
-
----
-
-# Step 7 — Build: Implement With Craft
+Every value should be a multiple of 4, with 8 as the primary unit. Random pixel values are the clearest sign that no design system exists.
 
 ## Per-Component Design Checklist
 
-Before writing UI code — even small additions — be able to answer:
+Before writing UI code, be able to answer:
 
 ```
-Intent: [who is this human, what must they do, how should it feel]
-Palette: [colors from your exploration — and WHY they fit this product's world]
-Depth: [borders / shadows / layered — and WHY this fits the intent]
-Surfaces: [your elevation scale — and WHY this color temperature]
-Typography: [your typeface — and WHY it fits the intent]
-Spacing: [your base unit]
+Intent:   Who is this human, what must they do, how should it feel?
+Palette:  Colors from domain exploration — and WHY they fit.
+Depth:    Borders / shadows / layered — and WHY this fits the intent.
+Surfaces: Elevation scale — and WHY this color temperature.
+Type:     Typeface and hierarchy — and WHY it fits the intent.
+Grid:     8-point spacing with density that matches the task.
 ```
 
-Use this as an internal checklist. Surface it explicitly only when the user needs rationale or the tradeoffs are non-obvious. If you can't explain WHY for each choice, you're defaulting — stop and think.
+Use as an internal checklist. Surface reasoning only when the user needs rationale or tradeoffs are non-obvious.
 
 ## Craft Foundations
 
-### Subtle Layering — The Backbone of Professional Interfaces
+Read `references/principles.md` for full implementation details. Key craft principles:
 
-This is the quality floor regardless of design direction. You should barely notice the system working. When you look at Vercel's dashboard, you don't think "nice borders." You just understand the structure. The craft is invisible — and that's how you know it's working.
+**Subtle layering** — The backbone of professional interfaces. Surface elevation shifts should be barely visible in isolation but create clear hierarchy when stacked. Study Vercel, Linear, Supabase — their craft is invisible, which is how you know it is working.
 
-### Surface Elevation — Stack Surfaces, Don't Fragment Them
+**Border progression** — Borders are not binary. Scale intensity to match boundary importance: subtle for sections, standard for cards, strong for focus rings. Use low-opacity rgba so borders define edges without demanding attention.
 
-Surfaces stack. A dropdown sits above a card which sits above the page. Build a numbered elevation system starting from the base. In dark mode, higher elevation = slightly lighter. Each jump should be only a few percentage points of lightness — barely visible in isolation, but hierarchy emerges as surfaces stack.
+**Surface elevation** — Surfaces stack. Build a numbered system (base → card → dropdown → overlay). In dark mode, higher = slightly lighter. In light mode, higher = shadow or lighter. Each jump: barely visible, felt rather than seen.
 
-**Key decisions:**
-- **Sidebars:** Same background as canvas — a subtle border is all the separation needed. Different colors fragment the visual space.
-- **Dropdowns:** One level above their parent surface, or they blend into the card.
-- **Inputs:** Slightly darker than surroundings — inputs are "inset" and signal "type here" without heavy borders.
+**Infinite expression** — No two interfaces should look the same. Same concepts, infinite variations. A metric display could be a hero number, sparkline, gauge, progress bar, trend badge, or something entirely new. The architecture emerges from the task and data.
 
-### Borders — Invisible When Idle, Findable When Needed
+## Implementation Pattern
 
-Use low-opacity rgba so borders define edges without demanding attention. Build a progression matching intensity to boundary importance: standard, softer, emphasis, focus rings.
+When building, follow this output structure:
 
-**The squint test:** Blur your eyes. Hierarchy should still be perceivable. Nothing should jump out. If borders are the first thing you notice, they're too strong.
-
-### Infinite Expression — No Two Interfaces Should Look the Same
-
-Every pattern has infinite variations. Never produce identical output: same sidebar width, same card grid, same metric boxes every time signals AI-generated immediately.
-
-A metric display could be a hero number, sparkline, gauge, progress bar, trend badge, or something new. The architecture should emerge from the task and data. Linear's cards don't look like Notion's. Vercel's metrics don't look like Stripe's. Same concepts, infinite expressions.
-
-### Color — Ground It in the Product's Physical World
-
-Your palette should feel like it came FROM somewhere — not like it was applied TO something. Before reaching for a palette, spend time in the product's world. What would you see in the physical version of this space? What materials, light, objects?
-
-Temperature is one axis but not enough. Is this quiet or loud? Dense or spacious? Serious or playful? A trading terminal and a meditation app are both "focused" — completely different kinds of focus. Find the specific quality.
+1. **State the direction** — Brief explanation of the design rationale: what principles are driving the choices, what the interface should feel like, why this approach over alternatives.
+2. **Write the code** — React/TypeScript with Tailwind, using existing component libraries (shadcn/ui, Radix) where appropriate. Every major styling choice should trace back to the stated direction.
+3. **Call out key decisions** — After the code, note 3-5 specific decisions that matter most: spacing, color, hierarchy, interaction choices. Explain why each one serves this specific product.
 
 ---
 
-# Step 8 — Evaluate: Pre-Presentation Quality Check
+# Step 7 — Evaluate: Check Before Showing
 
 **Before showing the user, look at what you made.**
 
-Ask: "If they said this lacks craft, what would they mean?" That thing you just thought of — fix it first. Your first output is probably generic. The work is catching it before the user has to.
+Ask: "If they said this lacks craft, what would they mean?" That thing you just thought of — fix it first.
 
-## Four Checks to Run Before Showing Anything
+## Quality Checks
 
-- **The swap test:** If you swapped the typeface for your usual one, would anyone notice? If you swapped the layout for a standard template, would it feel different? Wherever swapping wouldn't matter, you defaulted.
-- **The squint test:** Blur your eyes. Can you still perceive hierarchy? Is anything jumping out harshly? Craft whispers.
-- **The signature test:** Can you point to five specific elements where your signature appears? Not "the overall feel" — actual components. A signature you can't locate doesn't exist.
-- **The token test:** Read your CSS variables out loud. Do they sound like they belong to this product's world, or could they belong to any project?
+- **The swap test:** If you swapped the typeface, layout, or color scheme for the most common alternative and nobody noticed — you defaulted. Go back to Step 3.
+- **The squint test:** Blur your eyes. Hierarchy should still be perceivable. Nothing should jump out harshly. Craft whispers.
+- **The signature test:** Can you point to specific elements where your design signature appears? Not "the overall feel" — actual components.
+- **The psychology test:** Can you name which laws and principles are actively shaping the layout? If none, you designed by instinct, not intent.
 
-If any check fails, iterate before showing.
+## Anti-Patterns to Reject
 
-## Anti-Patterns — What to Actively Reject
+- Harsh borders that steal attention from content
+- Dramatic surface jumps that look like separate apps glued together
+- Inconsistent spacing that signals no design system
+- Mixed depth strategies (borders + shadows randomly)
+- Missing interaction states (hover, focus, disabled, loading, empty, error)
+- Pure white cards on colored backgrounds — tint to match page temperature
+- Gradients and color for decoration — every color application should communicate
+- Multiple competing accent colors — one accent, used with intention
 
-- **Harsh borders** — If borders are the first thing you notice, they steal attention from content. Use low-opacity rgba so they define edges without demanding focus.
-- **Dramatic surface jumps** — Large lightness gaps look like separate apps glued together. Whisper-quiet shifts (2–4% lightness) create hierarchy you feel rather than see.
-- **Inconsistent spacing** — Random pixel values are the clearest signal that no design system exists. Every value should trace to a base unit.
-- **Mixed depth strategies** — Combining borders-only with drop shadows fragments the visual language. One approach, committed to fully.
-- **Missing interaction states** — Elements that don't respond to hover, focus, or disabled states feel like photographs of software. Users need feedback that the interface is alive.
-- **Dramatic drop shadows** — Heavy shadows draw attention to chrome instead of content. Shadows should be barely perceptible — felt, not seen.
-- **Large radius on small elements** — A 12px radius on a 32px button is a pill by accident. Scale radius to element size.
-- **Pure white cards on colored backgrounds** — The contrast jump breaks surface hierarchy. Tint cards to match the page's color temperature.
-- **Thick decorative borders** — Heavy borders fragment the visual field. Something else (spacing, surface color) should be doing the structural work.
-- **Gradients and color for decoration** — Unmotivated color is noise. Every color application should communicate something: status, action, emphasis, or identity.
-- **Multiple accent colors** — More accents = more competition = nothing stands out. One accent, used with intention, beats five without thought.
-- **Different hues for different surfaces** — Gray card on a blue background reads as two separate interfaces. Same hue, shift only lightness.
-
----
-
-# Step 9 — Wrap Up: Surface the Logic Behind Your Decisions
-
-When you finish, close with the design direction and the concrete decisions that matter most:
-
-- Direction and feel
-- Depth strategy (borders, shadows, layered, or surface shifts)
-- Spacing base unit
-- Key component patterns worth reusing in this task
-
-Do not rely on a saved memory file. Keep the rationale in the current response so the user can review it immediately.
+Read `references/critique.md` for the full post-build review protocol.
 
 ---
 
 # Workflow
 
-## Communication Style — Stay Invisible, Not Silent
+## Communication Style
 
-Be invisible. Don't announce modes, narrate process, or describe what you're doing before you do it.
-
-**Never say:** "I'm in ESTABLISH MODE", "Let me check a saved system...", "I'll now run the domain exploration..."
-
-**Instead:** Jump into work. State results, not process. Surface reasoning only when it helps the user make a decision.
+Be invisible. Do not announce modes, narrate process, or describe what you are doing before you do it. Jump into work. State results, not process. Surface reasoning only when it helps the user decide.
 
 ---
 
 # Reference Files — Load On Demand
 
-Load these references only when you hit the scenario they solve. Do not preload all of them.
-
 | Reference | Load when | What it gives you |
 | --- | --- | --- |
-| `references/example.md` | Before building, if you're unsure how subtle layering translates to actual UI decisions | Concrete sidebar, surface, border, and dropdown choices with reasoning |
-| `references/principles.md` | You need token-level implementation detail, CSS patterns, dark mode specifics, spacing systems, or control token guidance | Full system-building reference: primitives, elevation hierarchy, depth strategies, typography, and more |
-| `references/critique.md` | Before running `/interface-design:critique` or doing a post-build craft pass | Review protocol for catching what defaulted — composition, craft, content, and structure |
-| `references/psychology.md` | When making hierarchy, layout, or interaction decisions and you need to understand the WHY behind patterns | Visual hierarchy, typography hierarchy, Hick's/Fitts's/Miller's/Jakob's Laws, Gestalt principles, cognitive load |
+| `references/psychology.md` | Making hierarchy, layout, or interaction decisions | All design psychology laws with detailed examples and applications |
+| `references/principles.md` | Need token-level CSS patterns, spacing systems, dark mode, elevation details | Full system-building reference: primitives, surfaces, borders, typography, depth |
+| `references/critique.md` | Post-build quality review or running `/interface-design:critique` | Review protocol: composition, craft, content, structure layers |
+| `references/example.md` | Unsure how subtle layering translates to actual decisions | Concrete sidebar, surface, border, dropdown choices with reasoning |
 
 # Commands
 
-- `/interface-design:status` — Current direction and design constraints in the active task
-- `/interface-design:audit` — Check code against the intended interface direction. Read `references/principles.md` for the token and system standards to audit against.
+- `/interface-design:status` — Current direction and design constraints
+- `/interface-design:audit` — Check code against intended direction. Read `references/principles.md` for standards.
 - `/interface-design:extract` — Extract reusable patterns from existing code
-- `/interface-design:critique` — Read `references/critique.md`, then critique your build for craft and rebuild what defaulted
+- `/interface-design:critique` — Read `references/critique.md`, then critique your build and rebuild what defaulted

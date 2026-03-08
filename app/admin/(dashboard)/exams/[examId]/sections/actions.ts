@@ -12,6 +12,12 @@ import {
 } from "@/lib/validations/question";
 import { revalidatePath } from "next/cache";
 
+function serialize<T>(obj: T): T {
+  return JSON.parse(JSON.stringify(obj, (_k, v) =>
+    typeof v === "object" && v !== null && "toNumber" in v ? Number(v) : v
+  ));
+}
+
 // Helper to verify admin owns the exam
 async function verifyExamOwnership(examId: string) {
   const admin = await requireAdmin();
@@ -96,7 +102,7 @@ export async function createQuestion(
 
   await recalculateExamMarks(examId);
   revalidatePath(`/admin/exams/${examId}`);
-  return { data: question };
+  return { data: serialize(question) };
 }
 
 export async function updateQuestion(
@@ -118,7 +124,7 @@ export async function updateQuestion(
 
   await recalculateExamMarks(examId);
   revalidatePath(`/admin/exams/${examId}`);
-  return { data: question };
+  return { data: serialize(question) };
 }
 
 export async function deleteQuestion(examId: string, questionId: string) {
