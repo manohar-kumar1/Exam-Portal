@@ -1,7 +1,7 @@
 "use client";
 
 import { useTransition, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -10,6 +10,7 @@ import {
   type CandidateSignInInput,
 } from "@/lib/validations/auth";
 
+import { signInCandidate, startExam } from "../actions";
 import {
   Card,
   CardHeader,
@@ -30,6 +31,7 @@ import {
 
 export default function CandidateLoginPage() {
   const params = useParams<{ accessLink: string }>();
+  const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [serverError, setServerError] = useState<string | null>(null);
 
@@ -45,8 +47,28 @@ export default function CandidateLoginPage() {
   function onSubmit(values: CandidateSignInInput) {
     setServerError(null);
     startTransition(async () => {
-      // TODO: Wire to server action in Task 3.1
-      console.log("Candidate login:", values);
+      const result = await signInCandidate(values);
+
+      if ("error" in result) {
+        setServerError(result.error ?? "An unexpected error occurred");
+        return;
+      }
+
+      const { data } = result;
+
+      if (data.hasExistingAttempt && data.attemptId) {
+        router.push(`/exam/${params.accessLink}/attempt/${data.attemptId}`);
+        return;
+      }
+
+      const startResult = await startExam(data.examId, data.candidateId);
+
+      if ("error" in startResult) {
+        setServerError(startResult.error ?? "Failed to start exam");
+        return;
+      }
+
+      router.push(`/exam/${params.accessLink}/attempt/${startResult.data.attemptId}`);
     });
   }
 
