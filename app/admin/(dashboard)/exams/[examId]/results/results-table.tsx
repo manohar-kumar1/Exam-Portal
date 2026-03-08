@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
-import { ArrowUpDown, Eye, Users } from "lucide-react";
+import { ArrowUpDown, Download, Eye, Users } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -149,10 +149,19 @@ export function ResultsTable({
 
   return (
     <Card>
-      <CardHeader>
+      <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle className="text-base">
           All Results ({attempts.length})
         </CardTitle>
+        <Button variant="outline" size="sm" asChild>
+          <a
+            href={`/api/v1/admin/exams/${examId}/results/export`}
+            download
+          >
+            <Download className="mr-2 h-4 w-4" />
+            Export CSV
+          </a>
+        </Button>
       </CardHeader>
       <CardContent>
         <Table>
