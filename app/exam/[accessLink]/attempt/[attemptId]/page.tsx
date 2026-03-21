@@ -18,9 +18,11 @@ export default async function ExamAttemptPage({
           title: true,
           accessLink: true,
           durationMinutes: true,
-          _count: { select: { sections: false } },
           sections: {
+            orderBy: { orderIndex: "asc" },
             select: {
+              title: true,
+              orderIndex: true,
               _count: { select: { questions: true } },
             },
           },
@@ -45,6 +47,11 @@ export default async function ExamAttemptPage({
     0
   );
 
+  const examSections = attempt.exam.sections.map((s) => ({
+    title: s.title,
+    questionCount: s._count.questions,
+  }));
+
   return (
     <ExamClient
       attemptId={attemptId}
@@ -54,6 +61,7 @@ export default async function ExamAttemptPage({
       initialTimeRemaining={timeRemaining}
       examDurationMinutes={attempt.exam.durationMinutes}
       totalQuestions={totalQuestions}
+      examSections={examSections}
     />
   );
 }

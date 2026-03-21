@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Licence Certificate – Meruva Surya Tej</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f0ede8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    .certificate-wrapper {
+      width: 860px;
+      position: relative;
+    }
+
+    /* Outer decorative border */
+    .certificate {
+      background: #fffdf8;
+      border: 3px solid #b8975a;
+      padding: 6px;
+      position: relative;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.18), 0 4px 16px rgba(0,0,0,0.10);
+    }
+
+    .certificate-inner {
+      border: 1.5px solid #d4b96a;
+      padding: 54px 64px 48px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Corner ornaments */
+    .corner {
+      position: absolute;
+      width: 64px;
+      height: 64px;
+    }
+    .corner svg { width: 100%; height: 100%; }
+    .corner-tl { top: 10px; left: 10px; }
+    .corner-tr { top: 10px; right: 10px; transform: scaleX(-1); }
+    .corner-bl { bottom: 10px; left: 10px; transform: scaleY(-1); }
+    .corner-br { bottom: 10px; right: 10px; transform: scale(-1); }
+
+    /* Watermark */
+    .watermark {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-30deg);
+      font-family: 'Playfair Display', serif;
+      font-size: 120px;
+      font-weight: 900;
+      color: rgba(184, 151, 90, 0.04);
+      white-space: nowrap;
+      pointer-events: none;
+      user-select: none;
+      letter-spacing: 8px;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #b8975a 0%, #e8cc80 50%, #b8975a 100%);
+      margin-bottom: 18px;
+      box-shadow: 0 4px 16px rgba(184,151,90,0.4);
+    }
+
+    .badge svg {
+      width: 36px;
+      height: 36px;
+      fill: #fff;
+    }
+
+    .org-name {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #b8975a;
+      margin-bottom: 8px;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 12px auto;
+      max-width: 320px;
+    }
+    .divider-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, #d4b96a, transparent);
+    }
+    .divider-diamond {
+      width: 6px;
+      height: 6px;
+      background: #b8975a;
+      transform: rotate(45deg);
+    }
+
+    /* Title */
+    .title-block {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .pre-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 10px;
+    }
+
+    .main-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px;
+      font-weight: 900;
+      color: #1a1208;
+      line-height: 1.1;
+      letter-spacing: -0.5px;
+    }
+
+    .main-title span {
+      color: #b8975a;
+    }
+
+    /* Body text */
+    .body-text {
+      text-align: center;
+      font-size: 14px;
+      color: #555;
+      line-height: 1.8;
+      margin-bottom: 28px;
+      max-width: 560px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Recipient */
+    .recipient-block {
+      text-align: center;
+      margin: 28px 0;
+    }
+
+    .presented-to {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin-bottom: 10px;
+    }
+
+    .recipient-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 42px;
+      font-weight: 700;
+      color: #1a1208;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    .recipient-email {
+      font-size: 13px;
+      color: #b8975a;
+      font-weight: 500;
+      letter-spacing: 1px;
+    }
+
+    /* Meta row */
+    .meta-row {
+      display: flex;
+      justify-content: center;
+      gap: 48px;
+      margin: 32px 0;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      text-align: center;
+    }
+
+    .meta-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #bbb;
+      margin-bottom: 4px;
+    }
+
+    .meta-value {
+      font-size: 14px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    /* Footer */
+    .footer {
+      margin-top: 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 32px;
+    }
+
+    .signature-block {
+      text-align: center;
+      flex: 1;
+    }
+
+    .signature-line {
+      width: 100%;
+      height: 1px;
+      background: #ccc;
+      margin-bottom: 8px;
+    }
+
+    .signature-name {
+      font-size: 12px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 2px;
+    }
+
+    .signature-title {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #aaa;
+    }
+
+    /* Seal */
+    .seal {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #b8975a 0%, #e8cc80 50%, #b8975a 100%);
+      box-shadow: 0 4px 16px rgba(184,151,90,0.35), inset 0 1px 2px rgba(255,255,255,0.3);
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .seal-inner {
+      width: 82px;
+      height: 82px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .seal svg {
+      width: 36px;
+      height: 36px;
+      fill: white;
+    }
+
+    .seal-text {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0; left: 0;
+    }
+
+    /* Certificate ID */
+    .cert-id {
+      text-align: center;
+      margin-top: 28px;
+      padding-top: 16px;
+      border-top: 1px dashed #e8ddc8;
+    }
+
+    .cert-id p {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #ccc;
+    }
+
+    .cert-id span {
+      font-family: 'Courier New', monospace;
+      color: #b8975a;
+      font-size: 11px;
+    }
+
+    @media print {
+      body { background: white; padding: 0; }
+      .certificate { box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="certificate-wrapper">
+  <div class="certificate">
+    <div class="certificate-inner">
+
+      <!-- Watermark -->
+      <div class="watermark">CERTIFIED</div>
+
+      <!-- Corner ornaments -->
+      <div class="corner corner-tl">
+        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 2 L2 30 Q2 2 30 2 Z" fill="#b8975a" opacity="0.15"/>
+          <path d="M2 2 L2 24" stroke="#b8975a" stroke-width="2" stroke-linecap="round"/>
+          <path d="M2 2 L24 2" stroke="#b8975a" stroke-width="2" stroke-linecap="round"/>
+          <path d="M2 12 Q12 2 12 2" stroke="#d4b96a" stroke-width="1" fill="none" stroke-linecap="round"/>
+          <circle cx="2" cy="2" r="3" fill="#b8975a"/>
+          <circle cx="24" cy="2" r="1.5" fill="#d4b96a"/>
+          <circle cx="2" cy="24" r="1.5" fill="#d4b96a"/>
+        </svg>
+      </div>
+      <div class="corner corner-tr">
+        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 2 L2 24" stroke="#b8975a" stroke-width="2" stroke-linecap="round"/>
+          <path d="M2 2 L24 2" stroke="#b8975a" stroke-width="2" stroke-linecap="round"/>
+          <path d="M2 12 Q12 2 12 2" stroke="#d4b96a" stroke-width="1" fill="none" stroke-linecap="round"/>
+          <circle cx="2" cy="2" r="3" fill="#b8975a"/>
+          <circle cx="24" cy="2" r="1.5" fill="#d4b96a"/>
+          <circle cx="2" cy="24" r="1.5" fill="#d4b96a"/>
+        </svg>
+      </div>
+      <div class="corner corner-bl">
+        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 2 L2 24" stroke="#b8975a" stroke-width="2" stroke-linecap="round"/>
+          <path d="M2 2 L24 2" stroke="#b8975a" stroke-width="2" stroke-linecap="round"/>
+          <path d="M2 12 Q12 2 12 2" stroke="#d4b96a" stroke-width="1" fill="none" stroke-linecap="round"/>
+          <circle cx="2" cy="2" r="3" fill="#b8975a"/>
+          <circle cx="24" cy="2" r="1.5" fill="#d4b96a"/>
+          <circle cx="2" cy="24" r="1.5" fill="#d4b96a"/>
+        </svg>
+      </div>
+      <div class="corner corner-br">
+        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 2 L2 24" stroke="#b8975a" stroke-width="2" stroke-linecap="round"/>
+          <path d="M2 2 L24 2" stroke="#b8975a" stroke-width="2" stroke-linecap="round"/>
+          <path d="M2 12 Q12 2 12 2" stroke="#d4b96a" stroke-width="1" fill="none" stroke-linecap="round"/>
+          <circle cx="2" cy="2" r="3" fill="#b8975a"/>
+          <circle cx="24" cy="2" r="1.5" fill="#d4b96a"/>
+          <circle cx="2" cy="24" r="1.5" fill="#d4b96a"/>
+        </svg>
+      </div>
+
+      <!-- Header -->
+      <div class="header">
+        <div class="badge">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-1 14l-3-3 1.41-1.41L11 12.17l4.59-4.58L17 9l-6 6z"/>
+          </svg>
+        </div>
+        <div class="org-name">Guardian Careers &nbsp;·&nbsp; Exam Portal</div>
+        <div class="divider">
+          <div class="divider-line"></div>
+          <div class="divider-diamond"></div>
+          <div class="divider-line"></div>
+        </div>
+      </div>
+
+      <!-- Title -->
+      <div class="title-block">
+        <div class="pre-title">This is to certify that</div>
+        <div class="main-title">Licence <span>Certificate</span></div>
+      </div>
+
+      <!-- Body text -->
+      <div class="body-text">
+        This certificate is officially granted to the individual named below in recognition of
+        their authorised access and verified identity within the <strong>Guardian Careers Exam Portal</strong> platform.
+        This licence confirms that the holder is a recognised and authorised administrator
+        of the assessment system.
+      </div>
+
+      <div class="divider" style="max-width:200px; margin: 0 auto 28px;">
+        <div class="divider-line"></div>
+        <div class="divider-diamond"></div>
+        <div class="divider-line"></div>
+      </div>
+
+      <!-- Recipient -->
+      <div class="recipient-block">
+        <div class="presented-to">Presented To</div>
+        <div class="recipient-name">Meruva Surya Tej</div>
+        <div class="recipient-email">suryatej.m13@gmail.com</div>
+      </div>
+
+      <!-- Meta -->
+      <div class="meta-row">
+        <div class="meta-item">
+          <div class="meta-label">Issue Date</div>
+          <div class="meta-value">21 March 2026</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Role</div>
+          <div class="meta-value">Platform Administrator</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Licence Type</div>
+          <div class="meta-value">Full Access</div>
+        </div>
+      </div>
+
+      <!-- Footer / Signatures -->
+      <div class="footer">
+        <div class="signature-block">
+          <div class="signature-line"></div>
+          <div class="signature-name">Guardian Careers</div>
+          <div class="signature-title">Platform Authority</div>
+        </div>
+
+        <div class="seal" title="Official Seal">
+          <div class="seal-inner">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-1 14l-3-3 1.41-1.41L11 12.17l4.59-4.58L17 9l-6 6z"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="signature-block">
+          <div class="signature-line"></div>
+          <div class="signature-name">Exam Portal</div>
+          <div class="signature-title">Issued By</div>
+        </div>
+      </div>
+
+      <!-- Certificate ID -->
+      <div class="cert-id">
+        <p>Certificate ID &nbsp;·&nbsp; <span>GC-EP-2026-MST-7391</span> &nbsp;·&nbsp; Verify at examportal.guardianacareers.com</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
